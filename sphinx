@@ -1,0 +1,57 @@
+#!/bin/bash
+. /etc/rc.d/init.d/functions 
+
+appName="Sphinx"
+
+stop(){  
+        /usr/local/sphinx/bin/searchd -c /usr/local/sphinx/etc/sphinx.conf --stop > /dev/null 2>&1   
+        ret=$?  
+        if [ $ret -eq 0 ]; then  
+                action $"Stoping $appName: " /bin/true  
+        else  
+                action $"Stoping $appName: " /bin/false  
+        fi  
+        return $ret  
+}  
+
+start(){  
+        /usr/local/sphinx/bin/searchd -c /usr/local/sphinx/etc/sphinx.conf > /dev/null 2>&1   
+        ret=$?  
+        if [ $ret -eq 0 ]; then  
+                action $"Starting $appName: " /bin/true  
+        else  
+                action $"Starting $appName: " /bin/false  
+        fi  
+        return $ret  
+}  
+
+indexer(){  
+        /usr/local/sphinx/bin/indexer --all --rotate > /dev/null 2>&1  
+        ret=$?  
+        if [ $ret -eq 0 ]; then  
+                action $"$appName making index: " /bin/true  
+        else  
+                action $"$appName making index: " /bin/false  
+        fi  
+        return $ret  
+} 
+
+case $1 in  
+    indexer)  
+    indexer  
+    ;;  
+
+    stop)  
+    stop  
+    ;;  
+
+    start)  
+    start  
+    ;; 
+
+    -h)
+    echo 'indexer|stop|start|-h'
+    ;;    
+esac  
+
+exit 0 

@@ -1,0 +1,3 @@
+# /bin/bash
+mv /home/wwwlogs/nginx_access.log /home/wwwlogs/nginx_access_$(date -d "yesterday" +"%Y_%m_%d").log
+kill -USR1 `cat /usr/local/nginx/logs/nginx.pid`

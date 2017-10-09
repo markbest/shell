@@ -57,6 +57,6 @@ case "$1" in
         ${0} start
         ;;
   *)
-    echo "Usage: /etc/init.d/redis {start|stop|restart}" >&2
+    echo "Usage: ${0} {start|stop|restart}" >&2
         exit 1
 esac
